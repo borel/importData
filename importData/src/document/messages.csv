@@ -1,6 +1,6 @@
-# Nom;Prénom;Classe;Sexe;Date de naissance;Adresse
+# prioriy;subject;content;date
 
-priority;subject;;02/01/1
-priority2;subject2;content2;02/01/1993
-priority3;subject3;content3;02/01/1994
-priority4;subject4;content4;02/01/1995
+1;errorDateCSV;errorDateCSV;errorDateCSV
+errorPriorityCSV;errorPriorityCSV;errorPriorityCSV,01/01/1994
+2;traceCSV;traceCSV;02/01/1993
+12;mailCSV;mailCSV;02/01/1995

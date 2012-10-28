@@ -13,7 +13,11 @@ public class Database {
 
 	private DB db = null;
 	private DBCollection collectionMessage;
-
+	
+	/**
+	 * Init the database information with information stock in class Ressources
+	 * @throws UnknownHostException
+	 */
 	public void connection() throws UnknownHostException {
 
 		Mongo mongo;
@@ -29,22 +33,17 @@ public class Database {
 		collectionMessage = db.getCollection(Ressources.COLLECTION_MESSAGE);
 
 	}
-
+	
+	/**
+	 * Insert a message in database
+	 * @param messageData
+	 */
 	public void insertMessage(MessageData messageData) {
 		// insertion of the message
 		BasicDBObject document = messageData.toBasicDBObject();
 
 		// save it into collection
 		collectionMessage.insert(document);
-
-		//
-		// // query it
-		// DBCursor cursor = collection.find();
-		//
-		// // loop over the cursor and print it retrieved result
-		// while (cursor.hasNext()) {
-		// System.out.println(cursor.next());
-		// }
 	}
 
 }

@@ -28,9 +28,9 @@ public class Ressources {
 	 /**
 	  * Mail information
 	  */
-	 public final static String EMAIL_HOST = "smtp.gmail.com";
-	 public final static String EMAIL_USER = "pbborel@gmail.com";
-	 public final static String EMAIL_PASSWORD = "pimousse69";
+	 public final static String EMAIL_HOST = "";
+	 public final static String EMAIL_USER = "";
+	 public final static String EMAIL_PASSWORD = "";
 	 public final static String EMAIL_DESTINATION = "pbborel@gmail.com";
 	 
 	 

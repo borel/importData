@@ -42,7 +42,11 @@ public class MessageData {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
+	
+	/**
+	 * Cast Java object to mongo db object
+	 * @return
+	 */
 	public BasicDBObject toBasicDBObject() {
 		BasicDBObject document = new BasicDBObject();
 		document.put("priority", this.getPriority());
@@ -55,6 +59,7 @@ public class MessageData {
 	public MessageData(Integer priority, String subject, String content,
 			Date date) {
 		super();
+		
 		if(priority != null){
 			this.priority = priority;
 		}else{

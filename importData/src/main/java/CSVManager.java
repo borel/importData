@@ -1,11 +1,10 @@
 package main.java;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -22,7 +21,7 @@ public class CSVManager {
 	 * @return list of data
 	 * @throws IOException 
 	 */
-	public List<String[]> getDatas(Collection<File> files) throws IOException {
+	public List<String[]> getDatas(Collection<File> files) {
 		List<String[]> datas = new ArrayList<String[]>();
 		for (File file : files) {
 			datas.addAll(getDatas(file));
@@ -37,36 +36,43 @@ public class CSVManager {
 	 * @return list of data
 	 * @throws IOException 
 	 */
-	public List<String[]> getDatas(File file) throws IOException {
+	public List<String[]> getDatas(File file) {
 
 		FileReader fileReader;
 		List<String[]> datas = new ArrayList<String[]>();
 
-		fileReader = new FileReader(file);
-		// Put the separator of the CSV file
-		CSVReader csvReader = new CSVReader(fileReader, Ressources.SEPARATOR);
+		try {
+			fileReader = new FileReader(file);
 
-		String[] nextLine = null;
+			// Put the separator of the CSV file
+			CSVReader csvReader = new CSVReader(fileReader,
+					Ressources.SEPARATOR);
 
-		while ((nextLine = csvReader.readNext()) != null) {
-			int size = nextLine.length;
+			String[] nextLine = null;
 
-			// Empty line
-			if (size == 0) {
-				continue;
+			while ((nextLine = csvReader.readNext()) != null) {
+				int size = nextLine.length;
+
+				// Empty line
+				if (size == 0) {
+					continue;
+				}
+				String debut = nextLine[0].trim();
+				if (debut.length() == 0 && size == 1) {
+					continue;
+				}
+
+				// Commenatary line
+				if (debut.startsWith("#")) {
+					continue;
+				}
+				datas.add(nextLine);
 			}
-			String debut = nextLine[0].trim();
-			if (debut.length() == 0 && size == 1) {
-				continue;
-			}
-
-			// Commenatary line
-			if (debut.startsWith("#")) {
-				continue;
-			}
-			datas.add(nextLine);
+		} catch (FileNotFoundException e) {
+			Log.traceFileCorrupt(file);
+		} catch (IOException e) {
+			Log.traceFileCorrupt(file);
 		}
-
 		return datas;
 
 	}
@@ -78,13 +84,19 @@ public class CSVManager {
 	 * @throws IOException 
 	 * @throws ParseException 
 	 */
-	public Collection<MessageData> getMessagesDatas(Collection<File> files) throws IOException, ParseException {
+	public Collection<MessageData> getMessagesDatas(Collection<File> files) {
 		Collection<MessageData> messagesDatas = new ArrayList<MessageData>();
-		List<String[]> datas = getDatas(files);
-		for (String[] csvData : datas) {
-			MessageData newMessageData = convertToMessageDate(csvData);
-			messagesDatas.add(newMessageData);
+
+		for (File file : files) {
+			List<String[]> datas = getDatas(file);
+			for (String[] csvData : datas) {
+				MessageData newMessageData = convertToMessageData(csvData,file);
+				if(newMessageData != null){
+					messagesDatas.add(newMessageData);
+				}
+			}
 		}
+
 		return messagesDatas;
 	}
 	
@@ -92,19 +104,41 @@ public class CSVManager {
 	 * convert csvData to MessageData Object
 	 * @param csvData
 	 * @return
-	 * @throws ParseException 
 	 */
-	public MessageData convertToMessageDate(String[] csvData) throws ParseException {
-		String priorityS = csvData[0];
-		String subject = csvData[1];
-		String content = csvData[2];
-		String dateS = csvData[3];
+	public MessageData convertToMessageData(String[] csvData, File file) {
 
-		Date date = Utils.toDate(dateS);
-		
+		MessageData message = null;
+		String subject = null;
+		String content = null;
+		String dateS = null;
+		String priorityS = null;
 
-		Integer priority = Integer.getInteger(priorityS);
-		MessageData message = new MessageData(priority, subject, content, date);
+		try {
+
+			Date date;
+
+			priorityS = csvData[0];
+			subject = csvData[1];
+			content = csvData[2];
+			dateS = csvData[3];
+
+			int priority = Integer.valueOf(priorityS);
+			date = Utils.toDate(dateS);
+			message = new MessageData(priority, subject, content, date);
+		} catch (ParseException e) {
+			message = new MessageData(null, subject, content, null);
+			Log.traceDateError(message, file, dateS);
+			return null;
+		} catch (NumberFormatException e) {
+			message = new MessageData(null, subject, content, null);
+			Log.tracePriorityError(message, file, priorityS);
+			return null;
+		} catch (Exception e) {
+			message = new MessageData(null, subject, content, null);
+			Log.traceError(message, file);
+			return null;
+		}
+
 		return message;
 
 	}

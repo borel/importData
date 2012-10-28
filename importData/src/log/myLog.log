@@ -1,0 +1,16 @@
+28 oct. 2012 15:33:43 main.java.Log traceDateError
+GRAVE: The message with subject 'errorDateCSV' and content 'errorDateCSV' and date = '0' on the file 'messages.csv' has a wrong date format . The value in error is : errorDateCSV
+28 oct. 2012 15:33:43 main.java.Log traceError
+GRAVE: The message with subject 'errorPriorityCSV' and content 'errorPriorityCSV,01/01/1994' and date = '0' on the file 'messages.csv' has a wrong format .
+28 oct. 2012 15:33:43 main.java.Log tracePriorityError
+GRAVE: The message with subject 'errorPriorityXML' and content 'errorPriorityXML' and date = '1' on the file 'messageXml.xml' has a wrong priority format . The value in error is : errorPriorityXML
+28 oct. 2012 15:33:43 main.java.Log traceDateError
+GRAVE: The message with subject 'errorDateXML' and content 'errorDateXML' and date = '0' on the file 'messageXml.xml' has a wrong date format . The value in error is : errorDateXML
+28 oct. 2012 15:33:43 main.java.Log traceSuccesfull
+INFO: The message with subject 'traceCSV' and content 'traceCSV' and date = '01/02/1993' and priority = '2' has been successfully manage
+28 oct. 2012 15:33:43 main.java.Log traceMailError
+GRAVE: The email configuration is not ok
+28 oct. 2012 15:33:43 main.java.Log traceSuccesfull
+INFO: The message with subject 'trace' and content 'content of the trace' and date = '02/02/1982' and priority = '9' has been successfully manage
+28 oct. 2012 15:33:43 main.java.Log traceMailError
+GRAVE: The email configuration is not ok

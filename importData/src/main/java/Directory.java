@@ -37,7 +37,6 @@ public class Directory {
 				if (isXml(file)) {
 					collectionXmlFile.add(file);
 				}
-
 			}
 		}
 		return collectionXmlFile;

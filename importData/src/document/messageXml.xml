@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
 <message>
-	<priority>03</priority>
-	<subject>TEST MAJ FA : AUCUNE DATE DEBUT</subject>
-	<content>1</content>
-	<date>02/0e1/1982Seeeeee</date>
+	<priority>errorPriorityXML</priority>
+	<subject>errorPriorityXML</subject>
+	<content>errorPriorityXML</content>
+	<date>21/10/2012</date>
 </message>
 <message>
-	<priority>2</priority>
-	<subject>BOREL</subject>
-	<content>CONTENT XML</content>
-	<date>02/01/2012</date>
+	<priority>1</priority>
+	<subject>errorDateXML</subject>
+	<content>errorDateXML</content>
+	<date>errorDateXML</date>
+</message>
+<message>
+	<priority>09</priority>
+	<subject>trace</subject>
+	<content>content of the trace</content>
+	<date>02/02/1982</date>
+</message>
+<message>
+	<priority>11</priority>
+	<subject>mail</subject>
+	<content>content of the mail</content>
+	<date>02/02/1982</date>
 </message>
 </messages>

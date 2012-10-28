@@ -2,14 +2,8 @@ package main.java;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import javax.mail.MessagingException;
-import javax.mail.NoSuchProviderException;
-
-import org.jdom2.JDOMException;
 
 import main.ressources.Ressources;
 
@@ -26,9 +20,10 @@ public class ImportMain {
 			CSVManager csvManager = new CSVManager();
 			XMLManager xmlManager = new XMLManager();
 			Email email = new Email();
-			Log log = new Log();
 			
-
+			//Init log
+			Log.init();
+			
 			// Database connection
 			database.connection();
 
@@ -54,37 +49,25 @@ public class ImportMain {
 
 			// Object Message
 			for (MessageData messageData : messageDataImported) {
+
+				// stored to database
+				database.insertMessage(messageData);
+				
 				if (messageData.getPriority() > 10) {
 					email.send(messageData);
 				} else {
-					log.trace(messageData);
+					Log.traceSuccesfull(messageData);
 				}
 
-				// stored to database
-				// database.insertMessage(messageData);
 			}
-
-			System.out.println("Done");
-
+			
+			
 		} catch (MongoException e) {
-			e.printStackTrace();
+			Log.traceDatabaseError();
 		}
 		 catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-		} catch (NoSuchProviderException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JDOMException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			Log.traceLogError();
+		} 
 	}
 
 }

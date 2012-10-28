@@ -16,15 +16,32 @@ public class Email {
 
 	private Session session = null;
 	private Transport transport = null;
-
-	public void send(MessageData messageData) throws NoSuchProviderException, MessagingException {
-			this.connect(Ressources.EMAIL_HOST, Ressources.EMAIL_USER,Ressources.EMAIL_PASSWORD);
-			this.send(Ressources.EMAIL_USER, Ressources.EMAIL_DESTINATION,
-					"Error in message : " + messageData.getSubject(),
-					"Error in message : " + messageData.getPriority());
 	
+	/**
+	 * Send email to the email destination initilaze in Ressources
+	 * @param messageData
+	 */
+	public void send(MessageData messageData) {
+			try {
+				this.connect(Ressources.EMAIL_HOST, Ressources.EMAIL_USER,Ressources.EMAIL_PASSWORD);
+				this.send(Ressources.EMAIL_USER, Ressources.EMAIL_DESTINATION,
+						"Error in message : " + messageData.getSubject(),
+						"Error in message : " + messageData.getPriority());
+			} catch (NoSuchProviderException e) {
+				Log.traceMailError();
+			} catch (MessagingException e) {
+				Log.traceMailError();
+			}
 	}
-
+	
+	/**
+	 * Email connection
+	 * @param host
+	 * @param user
+	 * @param password
+	 * @throws NoSuchProviderException
+	 * @throws MessagingException
+	 */
 	private void connect(String host, String user, String password)
 			throws NoSuchProviderException, MessagingException {
 		Properties props = new Properties();
@@ -36,7 +53,15 @@ public class Email {
 		this.transport = this.session.getTransport();
 		this.transport.connect(host, user, password);
 	}
-
+	
+	/**
+	 * Email send
+	 * @param from
+	 * @param to
+	 * @param subject
+	 * @param body
+	 * @throws MessagingException
+	 */
 	private void send(String from, String to, String subject, String body)
 			throws MessagingException {
 		MimeMessage message = new MimeMessage(this.session);
