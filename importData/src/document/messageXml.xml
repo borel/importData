@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages>
+<message>
+	<priority>03</priority>
+	<subject>TEST MAJ FA : AUCUNE DATE DEBUT</subject>
+	<content>1</content>
+	<date>02/0e1/1982Seeeeee</date>
+</message>
+<message>
+	<priority>2</priority>
+	<subject>BOREL</subject>
+	<content>CONTENT XML</content>
+	<date>02/01/2012</date>
+</message>
+</messages>
